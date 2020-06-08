@@ -25,14 +25,20 @@ struct ContentView: View {
             MainView()
                 .navigationBarTitle(Text("Main"))
                 .navigationBarItems(
-                    leading: EditButton(),
-                    trailing: Button(
-                        action: {
-                            withAnimation { Event.create(in: self.viewContext) }
-                        }
+                    //leading: EditButton()
+                    trailing: NavigationLink(
+                        destination: FavoriteMovieView()
                     ) {
-                        Image(systemName: "plus")
+                        //Button("\(event.timestamp!, formatter: dateFormatter)")
+                        Image(systemName: "heart.fill")
                     }
+//                    Button(
+//                        action: {
+//                            withAnimation { Event.create(in: self.viewContext) }
+//                        }
+//                    ) {
+//                        Image(systemName: "heart.fill")
+//                    }
                 )
             Text("Detail view content goes here")
                 .navigationBarTitle(Text("Detail"))
@@ -56,38 +62,38 @@ struct ContentView: View {
 //    }
 }
 
-struct MasterView: View {
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Event.timestamp, ascending: true)], 
-        animation: .default)
-    var events: FetchedResults<Event>
+//struct MasterView: View {
+//    @FetchRequest(
+//        sortDescriptors: [NSSortDescriptor(keyPath: \Event.timestamp, ascending: true)],
+//        animation: .default)
+//    var events: FetchedResults<Event>
+//
+//    @Environment(\.managedObjectContext)
+//    var viewContext
+//
+//    var body: some View {
+//        List {
+//            ForEach(events, id: \.self) { event in
+//                NavigationLink(
+//                    destination: DetailView(event: event)
+//                ) {
+//                    Text("\(event.timestamp!, formatter: dateFormatter)")
+//                }
+//            }.onDelete { indices in
+//                self.events.delete(at: indices, from: self.viewContext)
+//            }
+//        }
+//    }
+//}
 
-    @Environment(\.managedObjectContext)
-    var viewContext
-
-    var body: some View {
-        List {
-            ForEach(events, id: \.self) { event in
-                NavigationLink(
-                    destination: DetailView(event: event)
-                ) {
-                    Text("\(event.timestamp!, formatter: dateFormatter)")
-                }
-            }.onDelete { indices in
-                self.events.delete(at: indices, from: self.viewContext)
-            }
-        }
-    }
-}
-
-struct DetailView: View {
-    @ObservedObject var event: Event
-
-    var body: some View {
-        Text("\(event.timestamp!, formatter: dateFormatter)")
-            .navigationBarTitle(Text("Detail"))
-    }
-}
+//struct DetailView: View {
+//    @ObservedObject var event: Event
+//
+//    var body: some View {
+//        Text("\(event.timestamp!, formatter: dateFormatter)")
+//            .navigationBarTitle(Text("Detail"))
+//    }
+//}
 
 
 struct ContentView_Previews: PreviewProvider {

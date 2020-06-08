@@ -33,6 +33,10 @@ private let dateFormatter: DateFormatter = {
 struct MainView: View {
     @State var movieFromApi: MovieApiList = MovieApiList()
     @State private var favoriteColor = 0
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Movie.added, ascending: false)],
+        animation: .default)
+    var localMovies: FetchedResults<Movie>
     var colors = ["Popular", "Top Rated", "Now Playing"]
     
     //@Binding var notifyParentOnChangeIndex: Int
@@ -43,42 +47,36 @@ struct MainView: View {
         print("Color tag: \(tag)")
     }
     
+    func loadData(selectedList: Int) {
+        if (selectedList == 0) {
+            //print("Load Popular")
+            PopularMovieApi().getMovies { movieFromApi in
+                self.movieFromApi = movieFromApi
+                //print(self.movieFromApi)
+            }
+        } else if (selectedList == 1) {
+            //print("Load Top")
+            TopRatedMovieApi().getMovies { movieFromApi in
+                self.movieFromApi = movieFromApi
+                //print(self.movieFromApi)
+            }
+        } else if (selectedList == 2) {
+            //print("Load Playing")
+            NowPlayingMovieApi().getMovies { movieFromApi in
+                self.movieFromApi = movieFromApi
+                //print(self.movieFromApi)
+            }
+        }
+    }
+    
     var body: some View {
         let faveColor = Binding<Int>(get: {
 
             return self.favoriteColor
 
         }, set: {
-
-            
-
-            // TODO: DO YOUR STUFF HERE
-            // TODO: DO YOUR STUFF HERE
-            // TODO: DO YOUR STUFF HERE
-            //print(self.colors[$0]);
             self.favoriteColor = $0
-            if ($0 == 0) {
-                print("Load Popular")
-                PopularMovieApi().getMovies { movieFromApi in
-                    self.movieFromApi = movieFromApi
-                    //print(self.movieFromApi)
-                }
-            } else if ($0 == 1) {
-                print("Load Top")
-                TopRatedMovieApi().getMovies { movieFromApi in
-                    self.movieFromApi = movieFromApi
-                    //print(self.movieFromApi)
-                }
-            } else if ($0 == 2) {
-                print("Load Playing")
-                NowPlayingMovieApi().getMovies { movieFromApi in
-                    self.movieFromApi = movieFromApi
-                    //print(self.movieFromApi)
-                }
-            }
-
-            // USE this if needed to notify parent
-            //self.notifyParentOnChangeIndex = $0
+            self.loadData(selectedList: $0)
 
         })
         
@@ -88,64 +86,77 @@ struct MainView: View {
 //        }
         
         return VStack {
-            Picker(selection: faveColor, label: Text("What is your favorite color?")) {
+                    Picker(selection: faveColor, label: Text("What is your favorite color?")) {
                         ForEach(0..<colors.count) { index in
                             Text(self.colors[index]).tag(index)
                         }
                     }.pickerStyle(SegmentedPickerStyle())
-                    //List(movieFromApi.results) { movie in
                     List {
                         ForEach(movieFromApi.results, id: \.id) { movie in
-                            HStack(alignment: .center) {
-                                AsyncImage(
-                                    url: URL(string: movie.poster_path != nil ? "https://image.tmdb.org/t/p/w92" + movie.poster_path! : "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-4ee37443c461fff5bc221b43ae018a5dae317469c8e2479a87d562537dd45fdc.svg")!,
-                                    placeholder: Text("...")
-                                ).frame(minWidth:80, maxWidth: 80, minHeight: 120, maxHeight: 120).aspectRatio(contentMode: .fit)
-                                VStack(alignment: .leading) {
-                                    Text(movie.title)
-                                    Text(movie.release_date)
-                                }
+                            NavigationLink(
+                                destination: MovieDetailView(movie: movie, localMovies: self.localMovies)
+                            ) {
+                                MovieRow(movie: movie)
+//                                Text(movie.title)
+//                                    .fontWeight(.bold)
+                            
+//                                HStack(alignment: .center) {
+//                                    AsyncImage(
+//                                        url: URL(string: movie.poster_path != nil ? "https://image.tmdb.org/t/p/w92" + movie.poster_path! : "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-4ee37443c461fff5bc221b43ae018a5dae317469c8e2479a87d562537dd45fdc.svg")!,
+//                                        placeholder: Text("...")
+//                                    ).frame(minWidth:80, maxWidth: 80, minHeight: 120, maxHeight: 120).aspectRatio(contentMode: .fit)
+//                                    VStack(alignment: .leading) {
+//                                        Text(movie.title)
+//                                            .fontWeight(.bold)
+//                                        Text(movie.release_date)
+//                                            .font(.system(size: 14))
+//                                            .foregroundColor(.gray)
+//                                        Text(movie.overview)
+//                                            .font(.system(size: 12))
+//                                            .background(Color.red)
+//                                    }.frame(minHeight: 120, maxHeight: 120)
+//
+//                                }
                             }
                         }
                     }
                     .onAppear {
-                        PopularMovieApi().getMovies { movieFromApi in
-                            self.movieFromApi = movieFromApi
-                            //print(self.movieFromApi)
-                        }
+//                        PopularMovieApi().getMovies { movieFromApi in
+//                            self.movieFromApi = movieFromApi
+//                            //print(self.movieFromApi)
+//                        }
+                        self.loadData(selectedList: self.favoriteColor)
                     }
         }
         
         
             
     }
+
+}
+
+struct MovieRow: View {
+    var movie : MovieListEntry
     
-//    @FetchRequest(
-//        sortDescriptors: [NSSortDescriptor(keyPath: \Event.timestamp, ascending: true)],
-//        animation: .default)
-//    var events: FetchedResults<Event>
-//
-//    @Environment(\.managedObjectContext)
-//    var viewContext
-//
-//    var body: some View {
-//            List {
-//                ForEach(events, id: \.self) { event in
-//                    HStack(alignment: .center) {
-//                        AsyncImage(
-//                            url: URL(string: "https://image.tmdb.org/t/p/w92/aQvJ5WPzZgYVDrxLX4R6cLJCEaQ.jpg")!,
-//                            placeholder: Text("Loading ...")
-//                        ).frame(minWidth:80, maxWidth: 80, minHeight: 120, maxHeight: 120).aspectRatio(contentMode: .fit)
-//                        VStack(alignment: .leading) {
-//                            Text("MovieTitle")
-//                            Text("\(event.timestamp!, formatter: dateFormatter)")
-//                        }
-//                    }
-//                }.onDelete { indices in
-//                    self.events.delete(at: indices, from: self.viewContext)
-//                }
-//            }
-//    }
+    var body: some View {
+        HStack(alignment: .center) {
+            AsyncImage(
+                url: URL(string: movie.poster_path != nil ? "https://image.tmdb.org/t/p/w92" + movie.poster_path! : "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-4ee37443c461fff5bc221b43ae018a5dae317469c8e2479a87d562537dd45fdc.svg")!,
+                placeholder: Text("...")
+            ).frame(minWidth:80, maxWidth: 80, minHeight: 120, maxHeight: 120).aspectRatio(contentMode: .fit)
+            VStack(alignment: .leading) {
+                Text(movie.title)
+                    .fontWeight(.bold)
+                Text(movie.release_date)
+                    .font(.system(size: 14))
+                    .foregroundColor(.gray)
+                Text(movie.overview)
+                    .font(.system(size: 12))
+                    .background(Color.red)
+            }.frame(minHeight: 120, maxHeight: 120)
+
+        }
+    }
 }
 
 struct MainView_Previews: PreviewProvider {
