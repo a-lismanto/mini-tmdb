@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import SDWebImageSwiftUI
 
 private let dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
@@ -33,10 +34,10 @@ private let dateFormatter: DateFormatter = {
 struct MainView: View {
     @State var movieFromApi: MovieApiList = MovieApiList()
     @State private var favoriteColor = 0
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Movie.added, ascending: false)],
-        animation: .default)
-    var localMovies: FetchedResults<Movie>
+//    @FetchRequest(
+//        sortDescriptors: [NSSortDescriptor(keyPath: \Movie.added, ascending: false)],
+//        animation: .default)
+//    var localMovies: FetchedResults<Movie>
     var colors = ["Popular", "Top Rated", "Now Playing"]
     
     //@Binding var notifyParentOnChangeIndex: Int
@@ -94,7 +95,7 @@ struct MainView: View {
                     List {
                         ForEach(movieFromApi.results, id: \.id) { movie in
                             NavigationLink(
-                                destination: MovieDetailView(movie: movie, localMovies: self.localMovies)
+                                destination: MovieDetailView(movie: movie)
                             ) {
                                 MovieRow(movie: movie)
 //                                Text(movie.title)
@@ -140,10 +141,12 @@ struct MovieRow: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            AsyncImage(
-                url: URL(string: movie.poster_path != nil ? "https://image.tmdb.org/t/p/w92" + movie.poster_path! : "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-4ee37443c461fff5bc221b43ae018a5dae317469c8e2479a87d562537dd45fdc.svg")!,
-                placeholder: Text("...")
-            ).frame(minWidth:80, maxWidth: 80, minHeight: 120, maxHeight: 120).aspectRatio(contentMode: .fit)
+//            AsyncImage(
+//                url: URL(string: movie.poster_path != nil ? "https://image.tmdb.org/t/p/w92" + movie.poster_path! : "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-4ee37443c461fff5bc221b43ae018a5dae317469c8e2479a87d562537dd45fdc.svg")!,
+//                placeholder: Text("...")
+//            ).frame(minWidth:80, maxWidth: 80, minHeight: 120, maxHeight: 120).aspectRatio(contentMode: .fit)
+            WebImage(url: URL(string: movie.poster_path != nil ? "https://image.tmdb.org/t/p/w92" + movie.poster_path! : "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-4ee37443c461fff5bc221b43ae018a5dae317469c8e2479a87d562537dd45fdc.svg"))
+                .frame(width: 80, height: 140, alignment: .center)
             VStack(alignment: .leading) {
                 Text(movie.title)
                     .fontWeight(.bold)
@@ -152,8 +155,9 @@ struct MovieRow: View {
                     .foregroundColor(.gray)
                 Text(movie.overview)
                     .font(.system(size: 12))
-                    .background(Color.red)
-            }.frame(minHeight: 120, maxHeight: 120)
+            }
+            .padding(.leading, 4)
+            .frame(minHeight: 140, maxHeight: 140)
 
         }
     }
