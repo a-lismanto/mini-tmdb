@@ -13,7 +13,7 @@ import SDWebImageSwiftUI
 struct FavoriteMovieDetailView: View {
     var movie: Movie
     @State var reviewFromApi: ReviewApiList = ReviewApiList()
-//
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Movie.added, ascending: false)],
         animation: .default)
@@ -43,7 +43,6 @@ struct FavoriteMovieDetailView: View {
         if isFavorite {
             imgName = "heart.fill"
         }
-//        let localIndex = getLocalMovieIndex()
         var poster = "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-4ee37443c461fff5bc221b43ae018a5dae317469c8e2479a87d562537dd45fdc.svg"
         if movie.poster_path != nil {
             poster = "https://image.tmdb.org/t/p/w92" + movie.poster_path!
@@ -76,7 +75,6 @@ struct FavoriteMovieDetailView: View {
                 Text("Reviews")
                     .fontWeight(.bold)
                 ForEach(reviewFromApi.results, id: \.id) { review in
-                    //Text("Comment goes here")
                     ReviewRow(review: review)
                 }
             }

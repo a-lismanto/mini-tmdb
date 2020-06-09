@@ -24,8 +24,8 @@ struct ReviewListEntry : Decodable, Hashable {
 
 class MovieReviewApi {
     func getReview(movieId: String, completion: @escaping (ReviewApiList) -> ()) {
-        let urlString = "https://api.themoviedb.org/3/movie/" + movieId + "/reviews?api_key=c2bd0adf136236cb75033d37eb6111a5"
-        guard let url = URL(string: urlString) else { return }
+        //let urlString = Constants.BuildMovieReviewURL(movieId: movieId)
+        guard let url = URL(string: Constants.BuildMovieReviewURL(movieId: movieId)) else { return }
 
         URLSession.shared.dataTask(with: url) { (data, _, _) in
             guard let data = data else { return }

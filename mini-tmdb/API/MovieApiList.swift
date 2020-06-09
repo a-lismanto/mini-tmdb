@@ -23,8 +23,8 @@ struct MovieListEntry : Decodable, Hashable {
 
 class PopularMovieApi {
     func getMovies(completion: @escaping (MovieApiList) -> ()) {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=c2bd0adf136236cb75033d37eb6111a5") else { return }
-
+        guard let url = URL(string: Constants.BuildMovieListURL(listCategories: .popular)) else { return }
+        
         URLSession.shared.dataTask(with: url) { (data, _, _) in
             guard let data = data else { return }
 
@@ -39,7 +39,7 @@ class PopularMovieApi {
 
 class TopRatedMovieApi {
     func getMovies(completion: @escaping (MovieApiList) -> ()) {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=c2bd0adf136236cb75033d37eb6111a5") else { return }
+        guard let url = URL(string: Constants.BuildMovieListURL(listCategories: .topRated)) else { return }
 
         URLSession.shared.dataTask(with: url) { (data, _, _) in
             guard let data = data else { return }
@@ -55,7 +55,7 @@ class TopRatedMovieApi {
 
 class NowPlayingMovieApi {
     func getMovies(completion: @escaping (MovieApiList) -> ()) {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=c2bd0adf136236cb75033d37eb6111a5") else { return }
+        guard let url = URL(string: Constants.BuildMovieListURL(listCategories: .nowPlaying)) else { return }
 
         URLSession.shared.dataTask(with: url) { (data, _, _) in
             guard let data = data else { return }
