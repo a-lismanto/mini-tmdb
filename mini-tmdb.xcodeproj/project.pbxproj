@@ -27,6 +27,7 @@
 		D0244BDF248E335900D87EDD /* FavoriteMovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244BDE248E335900D87EDD /* FavoriteMovieDetailView.swift */; };
 		D0244BE1248E45DB00D87EDD /* MovieReviewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244BE0248E45DB00D87EDD /* MovieReviewRow.swift */; };
 		D0244BE4248E468F00D87EDD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244BE3248E468F00D87EDD /* Constants.swift */; };
+		D0244BE6248F527900D87EDD /* DateTimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244BE5248F527900D87EDD /* DateTimeHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		D0244BDE248E335900D87EDD /* FavoriteMovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMovieDetailView.swift; sourceTree = "<group>"; };
 		D0244BE0248E45DB00D87EDD /* MovieReviewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieReviewRow.swift; sourceTree = "<group>"; };
 		D0244BE3248E468F00D87EDD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D0244BE5248F527900D87EDD /* DateTimeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				D0244BE3248E468F00D87EDD /* Constants.swift */,
+				D0244BE5248F527900D87EDD /* DateTimeHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				D0244BE4248E468F00D87EDD /* Constants.swift in Sources */,
 				D0244BA0248C9D7600D87EDD /* mini_tmdb.xcdatamodeld in Sources */,
 				D0244BDF248E335900D87EDD /* FavoriteMovieDetailView.swift in Sources */,
+				D0244BE6248F527900D87EDD /* DateTimeHelper.swift in Sources */,
 				D0244BDD248DEA4100D87EDD /* FavoriteMovieView.swift in Sources */,
 				D0244BA2248C9D7600D87EDD /* SceneDelegate.swift in Sources */,
 				D0244BD7248DB48500D87EDD /* MovieDetailView.swift in Sources */,

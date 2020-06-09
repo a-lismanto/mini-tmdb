@@ -18,13 +18,10 @@ struct ReviewListEntry : Decodable, Hashable {
     var id: String
     var content: String
     var url: String
-//    var overview: String
-//    var release_date: String
 }
 
 class MovieReviewApi {
     func getReview(movieId: String, completion: @escaping (ReviewApiList) -> ()) {
-        //let urlString = Constants.BuildMovieReviewURL(movieId: movieId)
         guard let url = URL(string: Constants.BuildMovieReviewURL(movieId: movieId)) else { return }
 
         URLSession.shared.dataTask(with: url) { (data, _, _) in

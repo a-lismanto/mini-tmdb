@@ -28,7 +28,11 @@ class PopularMovieApi {
         URLSession.shared.dataTask(with: url) { (data, _, _) in
             guard let data = data else { return }
 
-            let movieList = try! JSONDecoder().decode(MovieApiList.self, from: data)
+            var movieList = try! JSONDecoder().decode(MovieApiList.self, from: data)
+            movieList.results.forEach { (movie) in
+                let index = movieList.results.firstIndex(of: movie)!
+                movieList.results[index].release_date = DateHelper.DateStringFormatChange(tmdbDateString: movie.release_date)
+            }
 
             DispatchQueue.main.async {
                 completion(movieList)
@@ -44,7 +48,11 @@ class TopRatedMovieApi {
         URLSession.shared.dataTask(with: url) { (data, _, _) in
             guard let data = data else { return }
 
-            let movieList = try! JSONDecoder().decode(MovieApiList.self, from: data)
+            var movieList = try! JSONDecoder().decode(MovieApiList.self, from: data)
+            movieList.results.forEach { (movie) in
+                let index = movieList.results.firstIndex(of: movie)!
+                movieList.results[index].release_date = DateHelper.DateStringFormatChange(tmdbDateString: movie.release_date)
+            }
 
             DispatchQueue.main.async {
                 completion(movieList)
@@ -60,19 +68,13 @@ class NowPlayingMovieApi {
         URLSession.shared.dataTask(with: url) { (data, _, _) in
             guard let data = data else { return }
 
-            let movieList = try! JSONDecoder().decode(MovieApiList.self, from: data)
-
-//            for movie in movieList.results {
-//                let poster = movie.poster_path != nil ? movie.poster_path! : ""
-//                print(movie.title + " poster: " + poster)
-//            }
+            var movieList = try! JSONDecoder().decode(MovieApiList.self, from: data)
+            movieList.results.forEach { (movie) in
+                let index = movieList.results.firstIndex(of: movie)!
+                movieList.results[index].release_date = DateHelper.DateStringFormatChange(tmdbDateString: movie.release_date)
+            }
             
             DispatchQueue.main.async {
-                //print(movieList.results[16].poster_path == nil)
-                //ForEach(movieList.results) { movie in
-//                ForEach(movieList.results, id: \.id) { movie in
-//                    print(movie.title + " poster: " + movie.poster_path);
-//                }
                 completion(movieList)
             }
         }.resume()

@@ -33,25 +33,6 @@ class mini_tmdbTests: XCTestCase {
         XCTAssert(movieReviewUrl == "https://api.themoviedb.org/3/movie/12345/reviews?api_key=c2bd0adf136236cb75033d37eb6111a5")
         
     }
-    
-    func testFavoriteMovieView() throws {
-//        var movie1 = Movie.init()
-//        movie1.id = 1
-//        movie1.title = "Movie 1"
-//        movie1.overview = "overview of movie 1"
-//        movie1.release_date = "2020-01-02"
-//        movie1.added = Date()
-        
-        //var dummy: FetchedResults<Movie>
-//        @Environment(\.managedObjectContext) var viewContext
-//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//        @FetchRequest(
-//        sortDescriptors: [NSSortDescriptor(keyPath: \Movie.added, ascending: false)],
-//        animation: .default)
-//        var movies: FetchRequest<Movie>
-        
-//        FavoriteMovieView(movies: movies, viewContext: context)
-    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

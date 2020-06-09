@@ -18,6 +18,9 @@ struct Constants {
     static var TMDB_API_MOVIE = "/movie"
     static var TMDB_API_REVIEW = "/reviews"
     
+    static var TMDB_DATE_FORMAT = "yyyy-MM-dd"
+    static var APP_DATE_FORMAT = "d MMM yyyy"
+    
     enum MovieListCategory {
         case popular, topRated, nowPlaying
     }

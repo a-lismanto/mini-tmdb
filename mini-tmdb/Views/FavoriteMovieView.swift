@@ -37,9 +37,6 @@ struct FavoriteMovieView: View {
                 .onDelete { indices in
                     var idx = -1;
                     indices.forEach { idx = $0 }
-                    //print(self.movies[idx].id)
-                    //let collectionIndex =
-                    
                     self.movies.delete(index: idx, from: self.viewContext)
                 }
             }

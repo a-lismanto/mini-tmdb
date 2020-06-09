@@ -31,8 +31,6 @@ struct ContentView: View {
                         Text("My Favorite")
                     }
                 )
-//            Text("Detail view content goes here")
-//                .navigationBarTitle(Text("Detail"))
         }.navigationViewStyle(DoubleColumnNavigationViewStyle())
     }
 }
