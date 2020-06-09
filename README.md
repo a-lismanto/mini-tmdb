@@ -3,7 +3,7 @@
 ![](./assets/demo.gif)
 
 ## Prepare Project
-You'll need XCode (Obviously) that support UISwift, prefered v11.5.
+You'll need XCode (Obviously) that support UISwift, prefered v11.5 or newer.
 
 ## Run Project
 Open Project using `.xcworkspace` file and simply Run it in iOS simulator.
